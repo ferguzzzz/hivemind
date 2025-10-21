@@ -1,4 +1,4 @@
-module github.com/DarthSim/hivemind
+module github.com/ferguzzzz/hivemind
 
 go 1.12
 
