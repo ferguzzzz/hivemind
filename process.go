@@ -16,7 +16,7 @@ type process struct {
 	output *multiOutput
 }
 
-func newProcess(name, command string, color int, root string, port int, output *multiOutput) (proc *process) {
+func newProcess(name, command string, color int, root string, output *multiOutput) (proc *process) {
 	proc = &process{
 		exec.Command("/bin/sh", "-c", command),
 		name,
@@ -25,7 +25,7 @@ func newProcess(name, command string, color int, root string, port int, output *
 	}
 
 	proc.Dir = root
-	proc.Env = append(os.Environ(), fmt.Sprintf("PORT=%d", port))
+	proc.Env = append([]string{}, os.Environ()...)
 
 	proc.output.Connect(proc)
 

@@ -9,10 +9,9 @@ import (
 type procfileEntry struct {
 	Name    string
 	Command string
-	Port    int
 }
 
-func parseProcfile(path string, portBase, portStep int) (entries []procfileEntry) {
+func parseProcfile(path string) (entries []procfileEntry) {
 	var f io.Reader
 	switch path {
 	case "-":
@@ -26,7 +25,6 @@ func parseProcfile(path string, portBase, portStep int) (entries []procfileEntry
 	}
 
 	re, _ := regexp.Compile(`^([\w-]+):\s+(.+)$`)
-	port := portBase
 	names := make(map[string]bool)
 
 	err := scanLines(f, func(b []byte) bool {
@@ -46,9 +44,7 @@ func parseProcfile(path string, portBase, portStep int) (entries []procfileEntry
 		}
 		names[name] = true
 
-		entries = append(entries, procfileEntry{name, cmd, port})
-
-		port += portStep
+		entries = append(entries, procfileEntry{name, cmd})
 
 		return true
 	})
